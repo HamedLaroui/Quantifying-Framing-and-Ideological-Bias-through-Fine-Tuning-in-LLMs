@@ -1,4 +1,5 @@
-# Narrative Framing in LLMs Fine-tuned on Israeli/Palestinian News Outlets
+# Quantifying Framing and Ideological Bias through Fine-Tuning in Large
+Language Models
 
 This repo covers the full pipeline for a study comparing how Gemma 3-12B's framing of the
 Israel-Palestine conflict shifts after fine-tuning on four news outlets with different editorial
