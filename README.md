@@ -15,13 +15,13 @@ news_scraper.ipynb
                      jerusalem_post_articles.csv, israelnationalnews_articles.csv)
         │
         ▼
-  Gemma3_12B_WAFA_TRAINING.ipynb  ─┐
-  Gemma3_12B_PNN_TRAINING.ipynb   ─┤  each produces one LoRA adapter,
-  Gemma3_12B_JPOST_TRAINING.ipynb ─┤  saved to its own Google Drive folder
-  Gemma3_12B_ISRAELNATIONALNEWS_TRAINING.ipynb ─┘
+  gemma3_WAFA_training.ipynb  ─┐
+  gemma3_PNN_training.ipynb   ─┤  each produces one LoRA adapter,
+  gemma3_12B_JPost_training.ipynb ─┤  saved to its own Google Drive folder
+  gemma3_INN_training.ipynb ─┘
         │
         ▼
-  Gemma3_MultiModel_Framing_Analysis.ipynb
+  gemma3_multimodel_framing_analysis.ipynb
         │
         ▼
   comparison charts: base Gemma 3 vs. all four fine-tuned adapters
@@ -32,21 +32,21 @@ news_scraper.ipynb
 | Notebook | Stage | What it does |
 |---|---|---|
 | `news_scraper.ipynb` | Scrape | Scrapes all four outlets, filtered to Gaza/Israel-Palestine coverage on/after 7 Oct 2023 |
-| `Gemma3_12B_WAFA_TRAINING.ipynb` | Fine-tune | QLoRA fine-tunes Gemma 3-12B on WAFA articles |
-| `Gemma3_12B_PNN_TRAINING.ipynb` | Fine-tune | QLoRA fine-tunes Gemma 3-12B on PNN articles |
-| `Gemma3_12B_JPOST_TRAINING.ipynb` | Fine-tune | QLoRA fine-tunes Gemma 3-12B on The Jerusalem Post articles |
-| `Gemma3_12B_ISRAELNATIONALNEWS_TRAINING.ipynb` | Fine-tune | QLoRA fine-tunes Gemma 3-12B on Israel National News articles |
-| `Gemma3_MultiModel_Framing_Analysis.ipynb` | Analyze | Loads base Gemma 3 + all four adapters, runs a framing-probe battery, produces comparison charts |
+| `gemma3_WAFA_training.ipynb` | Fine-tune | QLoRA fine-tunes Gemma 3-12B on WAFA articles |
+| `gemma3_PNN_training.ipynb` | Fine-tune | QLoRA fine-tunes Gemma 3-12B on PNN articles |
+| `gemma3_JPost_training.ipynb` | Fine-tune | QLoRA fine-tunes Gemma 3-12B on The Jerusalem Post articles |
+| `gemma3_INN_training.ipynb` | Fine-tune | QLoRA fine-tunes Gemma 3-12B on Israel National News articles |
+| `gemma3_multimodel_framing_analysis.ipynb` | Analyze | Loads base Gemma 3 + all four adapters, runs a framing-probe battery, produces comparison charts |
 
-The four training notebooks are intentionally near-identical — same base model, same LoRA config
+The four training notebooks are intentionally near-identical with same base model, same LoRA config
 (`r=16`, `alpha=32`, `dropout=0.1`), same training hyperparameters, same `TARGET_N=980` downsample
-target — so that any differences the analysis notebook finds reflect the training corpus, not the
+target, so that any differences the analysis notebook finds reflect the training corpus, not the
 training setup. The only real differences between them are the input CSV and the Drive folder each
 adapter saves to.
 
 ---
 
-## Stage 1 — Scraping (`news_scraper.ipynb`)
+## Stage 1: Scraping (`news_scraper.ipynb`)
 
 Scrapes English-language articles from all four outlets. WAFA and PNN use sequential-ID
 iteration, Jerusalem Post uses sitemap discovery + JSON-LD parsing, and Israel National News uses
@@ -61,7 +61,7 @@ expects its CSV at `/content/drive/MyDrive/<filename>`.
 
 ---
 
-## Stage 2 — Fine-tuning (`Gemma3_12B_<OUTLET>_TRAINING.ipynb`)
+## Stage 2: Fine-tuning (`gemma3_12B_<outlet>_training.ipynb`)
 
 Each notebook:
 
@@ -81,7 +81,7 @@ and an `HF_TOKEN` Colab secret.
 
 ---
 
-## Stage 3 — Multi-model comparison (`Gemma3_MultiModel_Framing_Analysis.ipynb`)
+## Stage 3: Multi-model comparison (`gemma3_multimodel_framing_analysis.ipynb`)
 
 Loads the base Gemma 3-12B model plus all four LoRA adapters side by side, runs a framing-probe
 battery (Yes/No and Likert-style prompts across a fixed item bank) against each, and produces
